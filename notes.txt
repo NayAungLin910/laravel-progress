@@ -1,0 +1,69 @@
+get()
+-----
+get() collects the data from the table as an array
+inwhich objects of data rows are included. Need 
+looping to extract information.
+------------------
+first()
+-------
+first() collects the data from the table as only a
+single object. Doest not need looping since it is
+just an object.
+------------------
+find()
+------
+Finds the data inside the table whose primary key
+matches the given value.
+------------------
+
+where()
+-------
+slect from table where condition
+E.g. Item::where('price', '<', 80)->get();
+E.g. Item::where('id', 1)->first();
+E.g. Item::where('price', '<=', 80)->where('price', '>', 70)->get();// and where
+E.g. Item::where('name', 'like', '%ios%')->first();
+-------------------
+orWhere()
+select from table with or where condition
+E.g. Item::where('name', 'like', '%honda%')
+     ->orhere('price', '<', 90)
+     ->get();
+-----------------
+selectRaw()
+-----------
+execute raw sql
+E.g. Item::selectRaw("sum(price) as 'total'")
+                ->where('price', '<', 100)
+                ->get();
+-------------------
+whereRaw()
+----------
+execute where raw sql
+E.g. Item::whereRaw("price < 90")
+                ->get();
+-------------------
+value()
+-------
+Only returns one value within the object.
+E.g. Item::where('id', 1)->value('image');
+------------------
+select()
+--------
+Only select the columsn given inside the slect()
+E.g. Item::where('id', 1)->select('image', 'name')->first();
+-------------------
+take()
+------
+Only takes the amount of data we need from table
+------------------
+
+aggregates
+----------
+count()
+give the sum of all the values in the price column 
+of the items table 
+
+E.g. Item::all()->sum('price')
+-----------------
+
