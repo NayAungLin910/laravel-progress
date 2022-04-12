@@ -12,13 +12,24 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $appends = ['full_name', 'test'];
+
+    public function getFullNameAttribute($value){
+        return $this->first_name.' '.$this->last_name;
+    }
+    public function getTestAttribute($value){
+        return 'testing atr'; 
+    }
+    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -28,10 +39,15 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
+    protected $hidden = [   
         'password',
         'remember_token',
     ];
+
+    // protected $visible = [
+    //     'name',
+    //     'email',
+    // ];
 
     /**
      * The attributes that should be cast.
@@ -41,4 +57,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getNameAttribute($value){
+        return ucfirst($value);
+    }
 }

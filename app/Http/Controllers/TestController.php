@@ -9,8 +9,7 @@ use App\Models\Item;
 class TestController extends Controller
 {
     public function test(){
-        $item = Item::whereRaw("price < 90")
-                ->get();
+        $item = Item::where('price', '>', '70')->count('id');
         
         return $item;
     }

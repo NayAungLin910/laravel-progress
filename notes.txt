@@ -60,10 +60,16 @@ Only takes the amount of data we need from table
 
 aggregates
 ----------
-count()
+sum()
 give the sum of all the values in the price column 
 of the items table 
 
 E.g. Item::all()->sum('price')
+-----------------
+count()
+-------
+Returns the count value of id 
+
+E.g.Item::where('price', '>', '70')->count('id');
 -----------------
 
