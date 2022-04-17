@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Items</title>
+    <title>Tag</title>
     <!-- Font Awesome -->
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -22,23 +22,15 @@
 />
 </head>
 <body>
-
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-md-8 offset-2">
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    All items
-                    <a href="{{url('/create')}}" class="btn btn-sm btn-success">Create New</a>
-                </div>
-                <div class="card-body">
-                    @yield('content')
-                </div>
-            </div>
+      <div class="col-md-6 offset-3">
+        <div class="card p-3">
+          @yield('content')
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
 <!-- MDB -->
 <script
   type="text/javascript"
