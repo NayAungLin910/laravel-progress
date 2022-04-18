@@ -1,16 +1,97 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
 
+// multi auth 4
+// Admin
+Route::get('/', function(){
+    return Auth::user();
+});
+
+Route::get('/admin/login', function(){
+    $cre = [
+        'email'=>'admin@gmail.com',
+        'password'=>'password',
+    ];
+    if(Auth::guard('admin')->attempt($cre)){
+        return Auth::guard('admin')->user();
+    }
+}); 
+
+Route::get('admin/logout', function(){
+    Auth::guard('admin')->logout();
+});
+
+Route::middleware('admin')->group(function(){
+    Route::get('/admin/post', function(){
+        return 'You can create post!';
+    });
+});
+
+Route::get('/admin/noauth', function(){
+    return 'You are not admin yet'; 
+});
+
+// Normal user
+Route::get('/user/login', function(){
+    $cre = [
+        'email'=>'user@gmail.com',
+        'password'=>'password',
+    ];
+    if(Auth::guard('web')->attempt($cre)){
+        return Auth::guard('web')->user();
+    }
+}); 
+
+Route::get('/user/logout', function(){
+    Auth::logout();
+});
+
+
+
+
+// // multi auth (Admin)
+// Route::get('/', function(){
+//     return view('home');
+// });
+
+// Route::get('/admin/login', function(){
+//     $cre = [
+//         'email'=>'admin@gmail.com',
+//         'password'=>'password',
+//     ];
+//     if(Auth::guard('admin')->attempt($cre)){
+//         return Auth::guard('admin')->user();
+//     }
+// });
+
+// Route::get('/data', function(){
+//     User::create([
+//         'name'=>'user',
+//         'email'=>'user@gmail.com',
+//         'password'=>Hash::make('password'),
+//     ]);
+//     Admin::create([
+//         'name'=>'Admin',
+//         'email'=>'admin@gmail.com',
+//         'password'=>Hash::make('password'),
+//     ]);
+// });
+
+
 // Login 
-Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/', [AuthController::class, 'home']);
-Route::get('/login', [AuthController::class, 'showlogin']);
-Route::post('/login', [AuthController::class, 'postlogin']);
+// Route::get('/logout', [AuthController::class, 'logout']);
+// Route::get('/', [AuthController::class, 'home']);
+// Route::get('/login', [AuthController::class, 'showlogin']);
+// Route::post('/login', [AuthController::class, 'postlogin']);
 
 // Route::resource('tag', App\Http\Controllers\TagController::class);
 
