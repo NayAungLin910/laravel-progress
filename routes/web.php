@@ -3,57 +3,67 @@
 use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
-
-// multi auth 4
-// Admin
+// Pgination
 Route::get('/', function(){
-    return Auth::user();
+    $tasks = Task::paginate('4');
+    return view('welcome', compact('tasks'));
 });
 
-Route::get('/admin/login', function(){
-    $cre = [
-        'email'=>'admin@gmail.com',
-        'password'=>'password',
-    ];
-    if(Auth::guard('admin')->attempt($cre)){
-        return Auth::guard('admin')->user();
-    }
-}); 
 
-Route::get('admin/logout', function(){
-    Auth::guard('admin')->logout();
-});
 
-Route::middleware('admin')->group(function(){
-    Route::get('/admin/post', function(){
-        return 'You can create post!';
-    });
-});
 
-Route::get('/admin/noauth', function(){
-    return 'You are not admin yet'; 
-});
 
-// Normal user
-Route::get('/user/login', function(){
-    $cre = [
-        'email'=>'user@gmail.com',
-        'password'=>'password',
-    ];
-    if(Auth::guard('web')->attempt($cre)){
-        return Auth::guard('web')->user();
-    }
-}); 
+// // multi auth 4
+// // Admin
+// Route::get('/', function(){
+//     return Auth::user();
+// });
 
-Route::get('/user/logout', function(){
-    Auth::logout();
-});
+// Route::get('/admin/login', function(){
+//     $cre = [
+//         'email'=>'admin@gmail.com',
+//         'password'=>'password',
+//     ];
+//     if(Auth::guard('admin')->attempt($cre)){
+//         return Auth::guard('admin')->user();
+//     }
+// }); 
+
+// Route::get('admin/logout', function(){
+//     Auth::guard('admin')->logout();
+// });
+
+// Route::middleware('admin')->group(function(){
+//     Route::get('/admin/post', function(){
+//         return 'You can create post!';
+//     });
+// });
+
+// Route::get('/admin/noauth', function(){
+//     return 'You are not admin yet'; 
+// });
+
+// // Normal user
+// Route::get('/user/login', function(){
+//     $cre = [
+//         'email'=>'user@gmail.com',
+//         'password'=>'password',
+//     ];
+//     if(Auth::guard('web')->attempt($cre)){
+//         return Auth::guard('web')->user();
+//     }
+// }); 
+
+// Route::get('/user/logout', function(){
+//     Auth::logout();
+// });
 
 
 
