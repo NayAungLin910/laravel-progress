@@ -1,24 +1,21 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Models\User;
-use App\Models\Admin;
-use App\Models\Task;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
-// Pgination
+
 Route::get('/', function(){
-    $tasks = Task::paginate('4');
-    return view('welcome', compact('tasks'));
+    $names = User::select('name')->get();
+    return $names;
 });
 
 
 
-
+// // Pgination
+// Route::get('/', function(){
+//     $tasks = Task::paginate('4');
+//     return view('welcome', compact('tasks'));
+// });
 
 // // multi auth 4
 // // Admin
