@@ -1,15 +1,66 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
+// group conditioning
 Route::get('/', function(){
-    $names = User::select('name')->get();
-    return $names;
+    return DB::table('users')
+               ->where('id', '<', '3')
+               ->orWhere(function($query){
+                   $query->orWhere('name', 'like', '%die%');
+                   $query->orWhere('name', 'like', '%alice%');
+               })
+               ->get();
 });
 
+// // cross join
+// Route::get('/', function(){
+//     $users = DB::table('users')
+//                  ->crossJoin('tasks')
+//                  ->select('tasks.name as task', 'users.name')
+//                  ->get();   
 
+//     return $users;
+// });
+
+// // join
+// Route::get('/', function(){
+//     $users = DB::table('users')
+//                  ->join('tasks', 'tasks.user_id', '=', 'users.id')
+//                  ->select('tasks.name as task', 'users.name')
+//                  ->get();
+
+//     return $users;
+// });
+
+// // whereIn
+// Route::get('/', function(){
+//     $users = DB::table('users')->whereIn('id', [1, 4, 50, 9, 20])->get();// return the user in the array
+//     return $users;
+// });
+
+// // whereBetween
+// Route::get('/', function(){
+//     $users = DB::table('users')->whereBetween('id', [1, 4])->get();
+//     return $users;
+// });
+
+// // Where update raw
+// Route::get('/', function(){
+//     DB::table('users')->where('id', 3)->update([
+//         'email'=>'edwardstrokes@gmail.com',
+//     ]);
+// });
+
+// // DB
+// Route::get('/', function(){
+//     // $names = User::select('name')->get();
+//     $names = DB::table('users')->get();
+//     return $names;
+// });
 
 // // Pgination
 // Route::get('/', function(){
