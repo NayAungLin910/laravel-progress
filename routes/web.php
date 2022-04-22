@@ -1,20 +1,110 @@
 <?php
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
-// group conditioning
+// synchrounous -> updates the related pivot data
 Route::get('/', function(){
-    return DB::table('users')
-               ->where('id', '<', '3')
-               ->orWhere(function($query){
-                   $query->orWhere('name', 'like', '%die%');
-                   $query->orWhere('name', 'like', '%alice%');
-               })
-               ->get();
+    User::find('8')->tasks()->sync([4, 5]);
 });
+
+// // Fill data including to related pivot table
+// Route::get('/', function(){
+//     $user = User::create([
+//         'name'=>'Brian Dog',
+//         'email'=>'briandog@gmail.com',
+//         'password'=>Hash::make('password'),
+//     ]);
+//     $t_arr = [8, 9, 10];
+//     $user->tasks()->attach($t_arr);
+// });
+
+/*
+    Many to Many
+    ------------
+
+    articles
+    --------
+    id  title                          
+    1   What is dev?
+    2   What is larave?
+
+    languages
+    ---------
+    1   php
+    2   html
+    3   css 
+
+    aritcle_langauges
+    -----------------
+    article_id  language_id
+    1           1
+    1           2
+    2           1
+    2           3
+*/
+// // Many to Many (might not be accurate)
+// // ------------------------------------
+// // Looking related data from User
+// Route::get('/', function(){
+//     return User::where('id', 13)->with('tasks')->first();
+// });// Laravel autodetects the pivot table without 's'
+
+// // Looking related data from Task
+// Route::get('/', function(){
+//     return Task::where('id', 4)->with('users')->first();
+// });
+
+
+
+/*
+    One to one
+    ----------
+    User::find(1)->userDetail();
+    User::where('id', 1)->with('userDetail')->first();
+    users
+    id name
+     1  Mg Mg
+
+    user_details
+    id user_id phone
+    1    1      090090..
+
+    {
+        id:1
+        name:mgmg
+        user_detail:{
+            id:1
+            user_id:1
+            phone:090090...
+        }
+    }
+*/
+// // One to One, Looking data of master table from foreign table 
+// Route::get('/', function(){
+//     return Task::where('id', 3)->with('user')->first();
+// });
+
+// // One to One, Looking data of foreign table from master table
+// Route::get('/', function(){
+//     return User::where('id', 1)->with('userDetail')->get();
+// });
+
+
+// // group conditioning
+// Route::get('/', function(){
+//     return DB::table('users')
+//                ->where('id', '<', '3')
+//                ->orWhere(function($query){
+//                    $query->orWhere('name', 'like', '%die%');
+//                    $query->orWhere('name', 'like', '%alice%');
+//                })
+//                ->get();
+// });
 
 // // cross join
 // Route::get('/', function(){

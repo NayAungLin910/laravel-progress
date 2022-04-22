@@ -61,4 +61,12 @@ class User extends Authenticatable
     public function getNameAttribute($value){
         return ucfirst($value);
     }
+
+    public function userDetail(){
+        return $this->hasOne(Task::class);
+    }
+
+    public function tasks(){
+        return $this->belongsToMany(Task::class);
+    }
 }
