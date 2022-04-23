@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Mechanic;
+use App\Models\Post;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -7,10 +10,32 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
-// synchrounous -> updates the related pivot data
+
+// // One to One Polymorphic
 Route::get('/', function(){
-    User::find('8')->tasks()->sync([4, 5]);
+    return Post::find(1)->image()->get();
 });
+
+// Route::get('/', function(){
+//     Post::find(1)->image()->create([
+//         'url'=>'image for post 1',
+//     ]);
+// });
+
+// // has many through
+// Route::get('/', function(){
+//     return Project::where('id', '2')->with('deployments')->get();
+// });
+
+// // has one through
+// Route::get('/', function(){
+//     return Mechanic::where('id', '1')->with('owner')->get();
+// });// make sure to use where while using with to get the exact data
+
+// // synchrounous -> updates the related pivot data
+// Route::get('/', function(){
+//     User::find('8')->tasks()->sync([4, 5]);
+// }); 
 
 // // Fill data including to related pivot table
 // Route::get('/', function(){

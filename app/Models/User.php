@@ -69,4 +69,9 @@ class User extends Authenticatable
     public function tasks(){
         return $this->belongsToMany(Task::class);
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }
