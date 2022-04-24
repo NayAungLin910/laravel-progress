@@ -5,16 +5,56 @@ use App\Models\Post;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
+// // Detach the tags 
+// Route::get('/', function(){
+//     Post::find('1')->tags()->detach();
+// });
+
+// // Sync Polymorphic Many to Many
+// Route::get('/', function(){
+//     Post::find('1')->tags()->sync([2, 1]);
+// });
+
+// // // Polymorphic Many to Many
+// Route::get('/', function(){
+//     return Post::find('1')->tags()->get();
+//     // Post::find('1')->tags()->attach([1, 2]);
+// });
+// Route::get('/', function(){
+//     return Video::find('1')->tags()->get();
+//     // Video::find('1')->tags()->attach([2, 3]);
+// });
+
+
+/*
+Polymorphic One to One 
+------------------------
+
+video
+-----
+id url
+
+post
+----
+id title
+
+comment
+-------
+id   comment   table commenter_id commented_id
+     video cmt video    1              1
+               post                    1
+ */
 
 // // One to One Polymorphic
-Route::get('/', function(){
-    return Post::find(1)->image()->get();
-});
+// Route::get('/', function(){
+//     return Post::find(1)->image()->get();
+// });
 
 // Route::get('/', function(){
 //     Post::find(1)->image()->create([
