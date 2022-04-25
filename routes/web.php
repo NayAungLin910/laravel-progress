@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Image;
+use App\Models\Item;
 use App\Models\Mechanic;
 use App\Models\Post;
 use App\Models\Project;
@@ -10,6 +12,69 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
+// SQL joining
+
+// // inner join
+// Route::get('/', function(){
+//     return DB::table('cars')
+//            ->join('mechanics', 'mechanics.id', 'cars.mechanic_id')
+//            ->select('cars.*', 'mechanics.name as mechanic_name')
+//            ->get();
+// });
+
+// // where in
+// Route::get('/', function(){
+//     return DB::table('items')->whereIn('id', [4, 2, 5, 11])->get();
+// });// 11 id item will not be returned due to not existing
+
+// // where between
+// Route::get('/', function(){
+//     return DB::table('items')->whereBetween('id', [2, 4])->get();
+// });
+
+// // Raw Expression
+// Route::get('/', function(){
+//     DB::table('items')->where('id', '2')->update([
+//         'price'=>DB::raw('price+500'),
+//     ]);
+// });
+
+// Order By
+// // order by
+// Route::get('/', function(){
+//     // return DB::table('items')->orderBy('id', 'ASC')->get();
+//     // return DB::table('items')->orderBy('id', 'DESC')->get();
+//     // return DB::table('items')->latest('id')->get();
+//     // return DB::table('items')->oldest('id')->get();
+// });
+
+// // Query Building
+// // count
+// Route::get('/', function(){
+//     return Item::count('name');
+// });
+
+// // min
+// Route::get('/', function(){
+//     return Item::min('price');
+// });
+
+// // max
+// Route::get('/', function(){
+//     return Item::max('price');
+// });
+
+// // select
+// Route::get('/', function(){
+//     $users_data = User::select('name', 'email')->get();
+//     return $users_data;// returns an arry witt objects of columns inside the select method
+// });
+
+// // pluck
+// Route::get('/', function(){
+//     $users_data = User::pluck('name');
+//     return $users_data;// returns an arry witout objects inside it
+// });
 
 // // Detach the tags 
 // Route::get('/', function(){
